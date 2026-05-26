@@ -288,14 +288,25 @@ if uploaded_file is not None:
             st.error(f"❌ The uploaded CSV is missing required columns: **{', '.join(missing_cols)}**.")
             st.info("Ensure the CSV contains at least `policy_number` and `recording_url` headers.")
         else:
-            # Clean and analyze the columns
-            df['cleaned_policy'] = df['policy_number'].apply(clean_value)
-            df['cleaned_url'] = df['recording_url'].apply(clean_value)
+            # Exclude rows where call_date has a value but duration_seconds is empty
+            if 'call_date' in df.columns and 'duration_seconds' in df.columns:
+                has_date = df['call_date'].apply(clean_value).notna()
+                empty_duration = df['duration_seconds'].apply(clean_value).isna()
+                violator_mask = has_date & empty_duration
+                removed_df = df[violator_mask].copy()
+                clean_df = df[~violator_mask].copy()
+            else:
+                removed_df = pd.DataFrame(columns=df.columns)
+                clean_df = df.copy()
+                
+            # Clean and analyze the columns on clean_df
+            clean_df['cleaned_policy'] = clean_df['policy_number'].apply(clean_value)
+            clean_df['cleaned_url'] = clean_df['recording_url'].apply(clean_value)
             
             # Calculate duration > 0 calls count
-            if 'duration_seconds' in df.columns:
+            if 'duration_seconds' in clean_df.columns:
                 try:
-                    durations = pd.to_numeric(df['duration_seconds'], errors='coerce').fillna(0)
+                    durations = pd.to_numeric(clean_df['duration_seconds'], errors='coerce').fillna(0)
                     duration_gt_0_count = int((durations > 0).sum())
                 except Exception:
                     duration_gt_0_count = 0
@@ -305,7 +316,7 @@ if uploaded_file is not None:
             # Generate the Excel report in memory if not already cached
             if st.session_state.excel_bytes is None:
                 try:
-                    excel_df = df.copy()
+                    excel_df = clean_df.copy()
                     
                     # Format call_date
                     if 'call_date' in excel_df.columns:
@@ -334,9 +345,9 @@ if uploaded_file is not None:
                 except Exception as exc:
                     st.error(f"Failed to generate Excel report: {str(exc)}")
             
-            # Filter rows that have valid URLs and policy numbers
-            valid_rows = df[df['cleaned_url'].notna() & df['cleaned_policy'].notna()]
-            skipped_rows = df[df['cleaned_url'].isna() | df['cleaned_policy'].isna()]
+            # Filter rows that have valid URLs and policy numbers in the cleaned data
+            valid_rows = clean_df[clean_df['cleaned_url'].notna() & clean_df['cleaned_policy'].notna()]
+            skipped_rows = clean_df[clean_df['cleaned_url'].isna() | clean_df['cleaned_policy'].isna()]
             
             # Metrics Display
             m1, m2, m3, m4 = st.columns(4)
@@ -350,15 +361,15 @@ if uploaded_file is not None:
             with m2:
                 st.markdown(f"""
                 <div class='metric-card'>
-                    <div class='metric-num'>{len(valid_rows)}</div>
-                    <div class='metric-label'>With Recordings</div>
+                    <div class='metric-num'>{len(removed_df)}</div>
+                    <div class='metric-label'>Excluded (Empty Duration)</div>
                 </div>
                 """, unsafe_allow_html=True)
             with m3:
                 st.markdown(f"""
                 <div class='metric-card'>
-                    <div class='metric-num'>{len(skipped_rows)}</div>
-                    <div class='metric-label'>Skipped / No Audio</div>
+                    <div class='metric-num'>{len(valid_rows)}</div>
+                    <div class='metric-label'>With Recordings</div>
                 </div>
                 """, unsafe_allow_html=True)
             with m4:
@@ -380,7 +391,7 @@ if uploaded_file is not None:
                 st.subheader("📊 Data Preview & Status")
                 
                 # Create a neat display dataframe
-                preview_df = df.copy()
+                preview_df = clean_df.copy()
                 # Flag if it will be downloaded
                 preview_df['Action Status'] = '⚠️ Skipped (No Recording URL)'
                 preview_df.loc[valid_rows.index, 'Action Status'] = '📥 Queued for Download'
@@ -394,6 +405,14 @@ if uploaded_file is not None:
                     use_container_width=True,
                     height=300
                 )
+                
+                # Report removed rows due to missing durations
+                if len(removed_df) > 0:
+                    st.markdown("<div style='margin-top: 1.5rem;'></div>", unsafe_allow_html=True)
+                    st.markdown("### ⚠️ Data Exclusions")
+                    with st.expander(f"⚠️ Excluded Records (Missing Call Durations) — {len(removed_df)} rows", expanded=True):
+                        st.warning("The following rows have a valid call_date but duration_seconds is empty/missing. They have been excluded from the Excel report.")
+                        st.dataframe(removed_df, use_container_width=True)
                 
             with col_right:
                 st.subheader("⚙️ Pack & Download Action Panel")
