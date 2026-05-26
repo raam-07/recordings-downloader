@@ -1,0 +1,59 @@
+call_id	call_detail_id	mobile_number	policy_number	call_date	duration_seconds	telephony_status	outcome	note	interested	reason_to_lost	recording_url	telephony_sid	scheduled_at
+019e62c9-6815-728f-bc35-238d796a47bd	019e63a6-b2ec-7922-a517-303b3f002a3e	9823950811	21528603	11:16.1	119	Completed	Follow-Up	"- Customer unable to receive OTP despite multiple attempts and contacting support.
+- Expressed frustration over unresolved issue and repeated attempts.
+- Agent will consult internal team and follow up with the customer."	TRUE		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e62c9-6815-728f-bc35-238d796a47bd.mp3	b902c5b3e210ade2b8694cde36a81a5q	07:07.1
+019e5f22-d592-7bef-8459-8ecbe0e76d6a	019e6338-a448-77ea-b4f0-0fc4e6e97a1f	9829367515	21509423	09:11.0	3	Completed	Follow-Up	"- No response from customer; call ended abruptly.
+- No feedback obtained.
+- Follow up needed to engage the customer."	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f22-d592-7bef-8459-8ecbe0e76d6a.mp3	b2f4481ea9ed1e9e08ec6d0e2ea81a5q	06:19.0
+019e62c9-6815-728f-bc35-238d796a47bd	019e6337-ac49-7154-a31b-b721b1a0f5ec	9823950811	21528603	08:26.7	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	07:07.1
+019e5f10-bd88-7edf-82f4-22c44f7fc7f9	019e62cb-a546-709c-933c-25c96d6bf5c5	9945415784	19032826	10:11.2	8	Completed	Follow-Up	"- Customer did not answer verification question, leading to no confirmation.
+- Call ended abruptly without further dialogue.
+- Follow‚Äëup required to re‚Äëengage and verify identity."	NULL	NULL	https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd88-7edf-82f4-22c44f7fc7f9.mp3	0b04e799c0ebb5979149c1d538d81a5q	46:33.1
+019e5f10-bd82-7e07-8213-82b0ab01a400	019e62ca-acc1-7da9-a4ed-4677d116bd8e	8169959736	23733857	08:59.4	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd7f-7dc0-94d2-e026ab7dff99	019e62c9-b4e6-7c90-8840-601ea01f3d24	9604904094	27545386	08:28.3	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f22-d592-7bef-8459-8ecbe0e76d6a	019e62c9-3915-7f45-8849-a8ed2b7bc63d	9829367515	21509423	07:25.5	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	06:19.0
+019e5f22-2508-755d-a4c5-7757b2ad9a21	019e62c5-cfc3-7e8d-ba8e-fd1eba876eb7	9823950811	21528603	07:07.1	201	Completed	Follow-Up	"- Customer unable to receive OTP for rider enrollment despite multiple attempts and email follow‚Äëup.
+- Expressed frustration that previous contacts with support did not resolve the issue.
+- Agent advised sending an urgent follow‚Äëup email with subject ‚ÄúUrgent Follow‚ÄëUp Required‚Äù and contacting customer care; customer agreed."	TRUE		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f22-2508-755d-a4c5-7757b2ad9a21.mp3	f4f7ad13b4d524573faf2ec757481a5q	05:33.8
+019e5f1b-3fec-727a-9146-affe56752ba3	019e62c4-55ca-745e-b085-1d2e3550e6f9	9586826028	26065916	03:17.8	56	Completed	Follow-Up	"- Customer did not respond to request to check SMS.
+- Call ended without confirmation of interest.
+- Follow-up needed to verify receipt and proceed."	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f1b-3fec-727a-9146-affe56752ba3.mp3	55d5a2d14003e47e00206a159d541a5q	58:01.9
+019e5f10-bd88-7edf-82f4-22c44f7fc7f9	019e625c-5a1c-7566-8dea-3b7f12b915ca	9945415784	19032826	09:18.7	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd86-74b0-93a6-f8922c7bc4dc	019e625b-5d1d-755f-b899-7caf07ba6819	9557657718	21096991	09:13.8	47	Completed	Lost	"- Customer declined to proceed with the Accidental Death Benefit Rider.
+- No reason provided for the refusal.
+- No further action required."	FALSE	User said 'No' to proceeding	https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd86-74b0-93a6-f8922c7bc4dc.mp3	a8a8f2d3b408bfc1538842062bb11a5q	46:33.1
+019e5f10-bd82-7e07-8213-82b0ab01a400	019e625a-616a-7b7a-af49-061797f8555b	8169959736	23733857	06:42.3	0	Busy	busy	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd7f-7dc0-94d2-e026ab7dff99	019e6259-637c-7c86-8f3e-af7fcf1e6325	9604904094	27545386	06:08.6	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd7e-72ec-a90e-ac7a60403bbd	019e6258-e409-7164-923e-f5c4c0766868	9535967794	26136478	05:04.4	8	Completed	Follow-Up	"- No response from the customer; call ended abruptly.
+- No customer feedback captured.
+- Schedule a follow‚Äëup attempt."	NULL	NULL	https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd7e-72ec-a90e-ac7a60403bbd.mp3	5b216dda2a5b2b36614dbcf323731a5q	46:33.1
+019e5f22-d592-7bef-8459-8ecbe0e76d6a	019e6257-e4b3-7460-87f4-04c92323783b	9829367515	21509423	04:24.1	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	06:19.0
+019e5f22-2508-755d-a4c5-7757b2ad9a21	019e6256-e597-7778-bf9f-0e776748f5a2	9823950811	21528603	03:06.4	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	05:33.8
+019e5f1d-a7e3-772a-b826-66fdba59b541	019e6256-6447-720c-9377-9f28576cb8aa	8360703824	22598768	02:12.1	5	Completed	Follow-Up	"- Customer did not answer the agent's greeting.
+- No information obtained from the customer.
+- Follow-up call needed to engage the customer."	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f1d-a7e3-772a-b826-66fdba59b541.mp3	8c0c68d6d08c829437e6d78aca391a5q	00:39.6
+019e5f1b-3fec-727a-9146-affe56752ba3	019e6255-6257-7f22-a7ac-f60948d05b2f	9586826028	26065916	01:04.3	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	58:01.9
+019e5f10-bd88-7edf-82f4-22c44f7fc7f9	019e5f26-f760-7f3e-909b-bb13ab122642	9945415784	19032826	11:48.9	0	Busy	busy	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd87-74c9-9845-4366b7d6897e	019e5f23-98ec-7c1f-825e-ae7e836aa62a	9550394383	19296260	11:07.8	195	Completed	Follow-Up	- Customer asked for exact rider sum assured amount; agent couldn't provide and promised to call back when details available. - Customer expressed dissatisfaction with lack of information. - Follow‚Äëup call needed to share precise rider sum assured and confirm interest.	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd87-74c9-9845-4366b7d6897e.mp3	e69f954c5f98ba10568d8c7bc8d41a5p	46:33.1
+019e5f10-bd86-74b0-93a6-f8922c7bc4dc	019e5f22-a29c-785e-8a95-bf6fadaae5e7	9557657718	21096991	06:55.8	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd85-75d2-87e6-4a1b876640ce	019e5f22-2797-789a-a9e0-236bc1582f02	9829367515	21509423	06:19.0	5	Completed	Follow-Up	"- No response from customer after identity verification attempt.
+- No feedback obtained.
+- Schedule a follow‚Äëup call to re‚Äëengage."	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd85-75d2-87e6-4a1b876640ce.mp3	e3b184eba250582375d11b575b391a5p	46:33.1
+019e5f10-bd84-7ed4-b405-9e3bc79cc797	019e5f1d-d44e-7d82-a6a6-7c0a18b3d1b2	9823950811	21528603	05:33.8	247	Completed	Follow-Up	"- Mandate reject prevented rider activation via the e‚Äëmandate link.
+- Customer faced OTP/auto‚Äëdebit issues and agreed to send a screenshot.
+- Agent advised emailing the screenshot to service@hdfc-life.com for resolution; follow‚Äëup pending."	TRUE		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd84-7ed4-b405-9e3bc79cc797.mp3	482d25698aa454e9b5f9a4d8bb061a5p	46:33.1
+019e5f10-bd83-70e0-ae77-fa90ee340afe	019e5f1c-dd65-7960-b44a-2a7265b5aee8	8360703824	22598768	00:39.6	26	Completed	Follow-Up	"- No response from the customer to the agent's question about proceeding with the Accidental Death Benefit Rider.
+- Conversation ended abruptly without any indication of interest or refusal.
+- Follow‚Äëup needed to re‚Äëengage the customer."	NULL	NULL	https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd83-70e0-ae77-fa90ee340afe.mp3	7779d8921f835e038652bae8626e1a5p	46:33.1
+019e5f10-bd82-7e07-8213-82b0ab01a400	019e5f1b-e722-72f3-b513-bb5bdf5560d3	8169959736	23733857	59:23.7	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd81-722f-b55d-e754a37604aa	019e5f1b-6bd9-7499-88d1-3ee6303016d8	9021212310	24982558	58:55.4	20	Completed	Follow-Up	"- No response from the customer; call ended abruptly.
+- No customer feedback or insight obtained.
+- Follow-up call scheduled."	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd81-722f-b55d-e754a37604aa.mp3	71092aac7e2787cb6cffd6fe97551a5p	46:33.1
+019e5f10-bd80-7572-b788-5765c7adfadf	019e5f19-fb6b-7d96-b6be-0ae5c3c697bd	9586826028	26065916	58:01.9	53	Completed	Follow-Up	"- Customer not ready to proceed now (said '‡§Ö‡§≠‡•Ä ‡§Æ‡•à‡§Ç ‡§ó‡§à ‡§®‡§π‡•Ä‡§Ç').
+- Expressed hesitation to complete Accidental Death Benefit Rider process.
+- Agent will follow up later as per customer's preference."	NULL		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd80-7572-b788-5765c7adfadf.mp3	3f2c183fd19989f4c5bf9e86d8411a5p	46:33.1
+019e5f10-bd7f-7dc0-94d2-e026ab7dff99	019e5f19-03ab-7b99-93a4-ca323ba22c7a	9604904094	27545386	56:32.3	0	No Answer	no_answer	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd7e-72ec-a90e-ac7a60403bbd	019e5f18-0d39-7874-934d-94929fde6306	9535967794	26136478	56:00.1	0	Failed	failed	NULL	NULL	NULL	NULL	sid	46:33.1
+019e5f10-bd7d-7c5c-8315-6facaec6e401	019e5f10-d558-7e54-bf3e-6c10836bb463	7908193511	27525383	55:05.7	455	Completed	Follow-Up	"- Customer unable to complete payment; auto‚Äëdebit shows successful but rider not activated.
+- Expressed frustration that email and phone attempts have not resolved the issue.
+- Agent advised to resend screenshot and email service@hdfclife.com for urgent escalation; follow‚Äëup needed."	TRUE		https://orbitel-recordings.s3.ap-south-1.amazonaws.com/hdfc_life_insurance/019e5f10-bd7d-7c5c-8315-6facaec6e401.mp3	cf795bccb4c4de0124f97c46e45d1a5p	46:33.1

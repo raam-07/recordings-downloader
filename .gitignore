@@ -1,0 +1,6 @@
+temp_recordings/
+*recordings.zip
+__pycache__/
+.DS_Store
+.venv/
+env/
