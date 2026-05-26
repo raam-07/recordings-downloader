@@ -7,6 +7,7 @@ import shutil
 import urllib.parse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
+import io
 
 # Set up page configurations
 st.set_page_config(
@@ -196,6 +197,12 @@ if 'zip_name' not in st.session_state:
     st.session_state.zip_name = None
 if 'download_logs' not in st.session_state:
     st.session_state.download_logs = []
+if 'excel_bytes' not in st.session_state:
+    st.session_state.excel_bytes = None
+if 'excel_name' not in st.session_state:
+    st.session_state.excel_name = None
+if 'success_count' not in st.session_state:
+    st.session_state.success_count = None
 
 # Directory configurations
 TEMP_DIR = os.path.join(os.getcwd(), "temp_recordings")
@@ -244,6 +251,9 @@ if uploaded_file is not None:
         st.session_state.zip_path = None
         st.session_state.zip_name = None
         st.session_state.download_logs = []
+        st.session_state.excel_bytes = None
+        st.session_state.excel_name = None
+        st.session_state.success_count = None
         clean_temp_directories()
 
     try:
@@ -281,6 +291,48 @@ if uploaded_file is not None:
             # Clean and analyze the columns
             df['cleaned_policy'] = df['policy_number'].apply(clean_value)
             df['cleaned_url'] = df['recording_url'].apply(clean_value)
+            
+            # Calculate duration > 0 calls count
+            if 'duration_seconds' in df.columns:
+                try:
+                    durations = pd.to_numeric(df['duration_seconds'], errors='coerce').fillna(0)
+                    duration_gt_0_count = int((durations > 0).sum())
+                except Exception:
+                    duration_gt_0_count = 0
+            else:
+                duration_gt_0_count = 0
+                
+            # Generate the Excel report in memory if not already cached
+            if st.session_state.excel_bytes is None:
+                try:
+                    excel_df = df.copy()
+                    
+                    # Format call_date
+                    if 'call_date' in excel_df.columns:
+                        try:
+                            excel_df['call_date'] = pd.to_datetime(excel_df['call_date'], errors='coerce')
+                            excel_df['call_date'] = excel_df['call_date'].dt.strftime('%Y-%m-%d %H:%M:%S').fillna('')
+                        except Exception:
+                            pass
+                    
+                    # Exclude the unwanted columns
+                    cols_to_remove = ['call_id', 'call_detail_id', 'telephony_status', 'recording_url', 'telephony_sid', 'scheduled_at', 'mobile_number']
+                    cols_to_drop = [c for c in cols_to_remove if c in excel_df.columns]
+                    excel_df = excel_df.drop(columns=cols_to_drop)
+                    
+                    # Exclude temporary columns
+                    temp_cols_to_drop = [c for c in ['cleaned_policy', 'cleaned_url'] if c in excel_df.columns]
+                    excel_df = excel_df.drop(columns=temp_cols_to_drop)
+                    
+                    # Write to Excel in memory using openpyxl
+                    excel_output = io.BytesIO()
+                    with pd.ExcelWriter(excel_output, engine='openpyxl') as writer:
+                        excel_df.to_excel(writer, index=False, sheet_name='Call Report')
+                    
+                    st.session_state.excel_bytes = excel_output.getvalue()
+                    st.session_state.excel_name = f"{os.path.splitext(uploaded_file.name)[0]}_report.xlsx"
+                except Exception as exc:
+                    st.error(f"Failed to generate Excel report: {str(exc)}")
             
             # Filter rows that have valid URLs and policy numbers
             valid_rows = df[df['cleaned_url'].notna() & df['cleaned_policy'].notna()]
@@ -346,6 +398,20 @@ if uploaded_file is not None:
             with col_right:
                 st.subheader("⚙️ Pack & Download Action Panel")
                 
+                # Excel report download section
+                if st.session_state.excel_bytes is not None:
+                    st.markdown("### 📄 Sanitized Excel Report")
+                    st.write("Download the sanitized report containing only essential columns and formatted timestamps.")
+                    st.download_button(
+                        label=f"📥 Download Excel Report (.xlsx)",
+                        data=st.session_state.excel_bytes,
+                        file_name=st.session_state.excel_name,
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        key="excel_report_download"
+                    )
+                    st.markdown("<hr style='margin: 1.5rem 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);'/>", unsafe_allow_html=True)
+                
+                st.markdown("### 🎙️ Download & Package Audio")
                 if len(valid_rows) == 0:
                     st.warning("⚠️ No valid recording URLs found in this CSV to download.")
                 else:
@@ -481,6 +547,7 @@ if uploaded_file is not None:
                             st.session_state.zip_path = zip_file_path
                             st.session_state.zip_name = zip_filename
                             st.session_state.download_logs = logs
+                            st.session_state.success_count = success_count
                             
                             st.balloons()
                         else:
@@ -490,6 +557,35 @@ if uploaded_file is not None:
                     # Display the download button if ZIP file is successfully generated
                     if st.session_state.zip_path and os.path.exists(st.session_state.zip_path):
                         st.success(f"🎉 **Ready!** Packaged files successfully.")
+                        
+                        # Render Quality Validation Flag
+                        if st.session_state.success_count is not None:
+                            s_count = st.session_state.success_count
+                            if s_count == duration_gt_0_count:
+                                st.markdown(f"""
+                                <div style="background-color: rgba(86, 227, 159, 0.1); border: 2px solid #56e39f; color: #56e39f; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(86, 227, 159, 0.15);">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <span style="font-size: 1.8rem; line-height: 1;">✅</span>
+                                        <div>
+                                            <strong style="font-size: 1.1rem; font-family: 'Space Grotesk', sans-serif;">VALIDATION PASSED</strong><br/>
+                                            <span style="font-size: 0.9rem; color: #c9d1d9;">All active conversations matched! The ZIP package contains exactly <strong>{s_count}</strong> recording files, which matches the <strong>{duration_gt_0_count}</strong> calls with duration > 0 seconds in the Excel report.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                """, unsafe_allow_html=True)
+                            else:
+                                st.markdown(f"""
+                                <div style="background-color: rgba(255, 183, 3, 0.1); border: 2px solid #ffb703; color: #ffb703; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; margin-bottom: 1.5rem; box-shadow: 0 4px 15px rgba(255, 183, 3, 0.15);">
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <span style="font-size: 1.8rem; line-height: 1;">⚠️</span>
+                                        <div>
+                                            <strong style="font-size: 1.1rem; font-family: 'Space Grotesk', sans-serif;">VALIDATION ALERT (MISMATCH)</strong><br/>
+                                            <span style="font-size: 0.9rem; color: #c9d1d9;">Count mismatch detected:
+                                            The ZIP contains <strong>{s_count}</strong> files, but there are <strong>{duration_gt_0_count}</strong> calls with duration > 0 seconds in the report. Verify if any download failures occurred.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                """, unsafe_allow_html=True)
                         
                         # Read the zip in binary mode for Streamlit download button
                         with open(st.session_state.zip_path, 'rb') as f:
